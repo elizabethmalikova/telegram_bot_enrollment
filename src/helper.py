@@ -11,7 +11,7 @@ def log_day():
 def tomorrow_day():
     locale.setlocale(locale.LC_TIME, 'ru_RU')
     # Определяем завтрашнюю дату
-    tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)
+    tomorrow = datetime.datetime.now(pytz.timezone('Europe/Moscow')) + datetime.timedelta(days=1)
     # Форматируем дату в нужный формат
     formatted_date = tomorrow.strftime("%d %B").capitalize()
     return formatted_date

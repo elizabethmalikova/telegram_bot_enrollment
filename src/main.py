@@ -8,9 +8,9 @@ import pytz
 from config import admin_id, bot_token
 from helper import start_time, end_time, start_day, end_day, count_users, \
     host_time, log_day, tomorrow_day
-from db_functions import create_table, add_enrollment, is_enrolled, \
+from db_functions import add_enrollment, is_enrolled, \
     enable_enrollment, disable_enrollment, get_random_usernames_with_names, clear_enable, count_total_enrollments, \
-    say_name, delete_table
+    say_name
 from apscheduler.schedulers.background import BackgroundScheduler
 from texts import text_welcome, text_info, text_cancel, text_no_enroll, text_already_enrolled, text_enroll, \
     text_no_time, text_no_name, text_greeting, text_intro
@@ -42,7 +42,6 @@ def send_keyboard(update, context):
 # Функция для команды /что это за бот
 def about_bot(update, context):
     print(log_day(), "Отправляю инфу о боте...")
-    user = update.message.from_user
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=text_info)
 
@@ -62,7 +61,7 @@ def user_name(update, context):
 
         if context.user_data.get(user_id, {}).get('waiting_for_name', False):
             introduction_text = update.message.text
-            user_exists, enable_status, real_name_exist = is_enrolled(conn, user_id)
+            user_exists, _, _ = is_enrolled(conn, user_id)
             if user_exists is True:
                 say_name(conn, user_id, introduction_text)
             else:
@@ -86,7 +85,7 @@ def cancel_enrollment(update, context):
 
     conn = sqlite3.connect('enrollments.db')
 
-    exist, status, real_name_exist = is_enrolled(conn, user_id)
+    exist, status, _ = is_enrolled(conn, user_id)
 
     current_time = datetime.datetime.now(pytz.timezone('Europe/Moscow')).time()
     current_day = datetime.datetime.now(pytz.timezone('Europe/Moscow'))
