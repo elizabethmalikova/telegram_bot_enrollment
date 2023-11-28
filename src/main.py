@@ -199,9 +199,8 @@ def main():
     scheduler.start()
 
     # Добавляем задачу на отправку массива никнеймов в нужный день и время
-    context_chat = admin_id
     # job_queue.run_repeating(send_random_enrollments, interval=3600 * result_hour + 60, first=0, context=context_chat)
-    job_queue.run_daily(send_random_enrollments, time=host_time, days=(end_day,), context=context_chat)
+    job_queue.run_daily(send_random_enrollments, time=host_time, days=(end_day,), context=admin_id)
 
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.text(button_enroll), enroll))

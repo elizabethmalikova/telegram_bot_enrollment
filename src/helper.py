@@ -38,4 +38,3 @@ host_time = datetime.time(host_time_hour - 3, host_time_minute)
 
 # сколько человек
 count_users = 30
-
