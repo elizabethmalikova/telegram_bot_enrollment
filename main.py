@@ -46,7 +46,7 @@ def about_bot(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=text_info)
 
-
+# Функция для команды представься
 def user_name(update, context):
     user = update.message.from_user
     user_id = user.id
@@ -55,7 +55,8 @@ def user_name(update, context):
 
     update.message.reply_text(text_intro)
     context.user_data[user_id] = {'waiting_for_name': True}
-
+    
+    # Обработка текстового ответа юзера
     def handle_introduction(update, context):
         user_id = update.message.from_user.id
 
@@ -157,6 +158,7 @@ def send_random_enrollments(context: JobQueue):
     conn.close()
     tomorrow = tomorrow_day()
 
+    # Отправляем всем кто в списке сообщение
     for user_id, username, user_real_name in enrollments:
         try:
             context.bot.send_message(chat_id=user_id, text=text_greeting.format(
