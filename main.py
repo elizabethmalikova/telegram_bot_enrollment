@@ -184,7 +184,6 @@ def main():
     job_queue = updater.job_queue
     # Создаем объект соединения с базой данных
     conn = sqlite3.connect('enrollments.db')
-    create_table(conn)
 
     # Создаем объект планировщика
     scheduler = BackgroundScheduler()
